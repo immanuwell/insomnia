@@ -243,6 +243,7 @@ export const ResponseViewer = ({
         }
         placeholder="..."
         readOnly
+        truncateLongLines
         uniquenessKey={responseId}
         updateFilter={filter => {
           updateFilter?.(filter);
@@ -370,6 +371,7 @@ export const ResponseViewer = ({
       }
       placeholder="..."
       readOnly
+      truncateLongLines
       uniquenessKey={responseId}
       updateFilter={filter => {
         updateFilter?.(filter);
