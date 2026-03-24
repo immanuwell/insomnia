@@ -92,7 +92,12 @@ function setEditorValueWithTruncation(
   if (!editor) {
     return;
   }
-  // split the origin text by line with different line breaks across Different OS
+  if (fullText.length <= threshold) {
+    // If the full text length is under the threshold, set it directly without processing
+    editor.setValue(fullText);
+    return;
+  }
+  // split the original text by line with different line breaks across Different OS
   const lines = fullText.split(/\r\n?|\n/);
   const longLinesMap: Record<number, string> = {};
   for (let i = 0; i < lines.length; i++) {
@@ -114,6 +119,7 @@ function setEditorValueWithTruncation(
 
     el.textContent = '\u2026 Show full value \u2026';
     el.title = 'Expanding long values can affect performance';
+    el.setAttribute('aria-label', 'Show full value');
     el.onclick = () => {
       editor.replaceRange(
         originalText,
@@ -441,7 +447,6 @@ export const CodeEditor = memo(
           styleActiveLine: !noStyleActiveLine,
           indentWithTabs,
           showCursorWhenSelecting: false,
-          maxHighlightLength: 1000,
           cursorScrollMargin: 12,
           // Only set keyMap if we're not read-only. This is so things like ctrl-a work on read-only mode.
           keyMap: !readOnly && settings.editorKeyMap ? settings.editorKeyMap : 'default',
