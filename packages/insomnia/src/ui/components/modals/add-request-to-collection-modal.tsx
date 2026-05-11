@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import type { BaseModel, Project } from '~/insomnia-data';
 import { models, services } from '~/insomnia-data';
 import { useRequestNewActionFetcher } from '~/routes/organization.$organizationId.project.$projectId.workspace.$workspaceId.debug.request.new';
+import { SegmentEvent } from '~/ui/analytics';
 
 import { database } from '../../../common/database';
 import { strings } from '../../../common/strings';
@@ -72,6 +73,11 @@ export const AddRequestToCollectionModal: FC<AddRequestModalProps> = ({ onHide }
       parentId: selectedWorkspaceId,
     });
     previousRequestFetcherState.current = 'loading';
+
+    window.main.trackSegmentEvent({
+      event: SegmentEvent.requestCreated,
+      properties: { requestType: 'HTTP', source: "tab-list" },
+    });
   };
 
   useEffect(() => {
