@@ -20,7 +20,7 @@ import { getAppBuildDate, getAppVersion, getProductName, isDevelopment, MNEMONIC
 import { docsBase } from '../common/documentation';
 import { isLinux, isMac } from '../common/platform';
 import { invariant } from '../utils/invariant';
-import { SegmentEvent, trackSegmentEvent } from './analytics';
+import { AnalyticsEvent, trackAnalyticsEvent } from './analytics';
 import { getElectronStorage } from './electron-storage';
 import { ipcMainOn } from './ipc/electron';
 import { getLogDirectory } from './log';
@@ -268,10 +268,7 @@ export function createWindow(): ElectronBrowserWindow {
       {
         label: `${MNEMONIC_SYM}Preferences`,
         click: () => {
-          trackSegmentEvent(
-            SegmentEvent.AppMenuPreferencesClicked,
-            {}
-          );
+          trackAnalyticsEvent(AnalyticsEvent.AppMenuPreferencesClicked);
           mainBrowserWindow.webContents?.send('toggle-preferences');
         },
       },
