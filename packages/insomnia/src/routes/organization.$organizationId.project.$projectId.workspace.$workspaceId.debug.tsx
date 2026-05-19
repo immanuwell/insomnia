@@ -72,7 +72,7 @@ import Tutorial, {
   scratchPadTutorialList,
 } from '~/routes/organization.$organizationId.project.$projectId.workspace.$workspaceId.debug.tutorial.$panel';
 import { useToggleExpandAllActionFetcher } from '~/routes/organization.$organizationId.project.$projectId.workspace.$workspaceId.toggle-expand-all';
- import { AnalyticsEvent, makeRequestCreatedEvent } from '~/ui/analytics';
+import { AnalyticsEvent } from '~/ui/analytics';
 import { DropdownHint } from '~/ui/components/base/dropdown/dropdown-hint';
 import { DocumentTab } from '~/ui/components/document-tab';
 import { RequestActionsDropdown } from '~/ui/components/dropdowns/request-actions-dropdown';
@@ -453,6 +453,9 @@ const Debug = () => {
         workspaceId,
         requestType: 'HTTP',
         parentId,
+        metrics: {
+          source: 'shortcut',
+        },
       });
     },
     request_showCreateFolder: () => {
@@ -527,6 +530,9 @@ const Debug = () => {
       requestType,
       parentId,
       req,
+      metrics: {
+        source: 'sidebar',
+      }
     });
 
   const reorderFetcher = useDebugReorderActionFetcher();
@@ -685,9 +691,6 @@ const Debug = () => {
               requestType: 'HTTP',
               parentId: workspaceId,
             });
-            window.main.trackAnalyticsEvent(
-              makeRequestCreatedEvent('HTTP', 'sidebar')
-            );
           },
         },
         {
@@ -699,9 +702,6 @@ const Debug = () => {
               requestType: 'Event Stream',
               parentId: workspaceId,
             });
-            window.main.trackAnalyticsEvent(
-              makeRequestCreatedEvent('Event Stream', 'sidebar')
-            );
           },
         },
         {
@@ -713,9 +713,6 @@ const Debug = () => {
               requestType: 'GraphQL',
               parentId: workspaceId,
             });
-            window.main.trackAnalyticsEvent(
-              makeRequestCreatedEvent('GraphQL', 'sidebar')
-            );
           },
         },
         {
@@ -727,9 +724,6 @@ const Debug = () => {
               requestType: 'gRPC',
               parentId: workspaceId,
             });
-            window.main.trackAnalyticsEvent(
-              makeRequestCreatedEvent('gRPC', 'sidebar')
-            );
           },
         },
         {
@@ -741,9 +735,6 @@ const Debug = () => {
               requestType: 'WebSocket',
               parentId: workspaceId,
             });
-            window.main.trackAnalyticsEvent(
-              makeRequestCreatedEvent('WebSocket', 'sidebar')
-            );
           },
         },
         {
@@ -755,9 +746,6 @@ const Debug = () => {
               requestType: 'SocketIO',
               parentId: workspaceId,
             });
-            window.main.trackAnalyticsEvent(
-              makeRequestCreatedEvent('SocketIO', 'sidebar')
-            );
           },
         },
       ],

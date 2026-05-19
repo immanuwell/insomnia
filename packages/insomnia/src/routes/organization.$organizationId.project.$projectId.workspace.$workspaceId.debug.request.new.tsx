@@ -10,6 +10,7 @@ import {
 } from '~/common/constants';
 import type { Request, RequestBody, RequestParameter } from '~/insomnia-data';
 import { services } from '~/insomnia-data';
+import type { RequestCreatedMetricsProperties } from '~/ui/analytics';
 import { AnalyticsEvent } from '~/ui/analytics';
 import type { CreateRequestType } from '~/ui/hooks/use-request';
 import { invariant } from '~/utils/invariant';
@@ -17,13 +18,16 @@ import { createFetcherSubmitHook } from '~/utils/router';
 
 import type { Route } from './+types/organization.$organizationId.project.$projectId.workspace.$workspaceId.debug.request.new';
 
+
+
 export async function clientAction({ params, request }: Route.ClientActionArgs) {
   const { organizationId, projectId, workspaceId } = params;
 
-  const { requestType, parentId, req } = (await request.json()) as {
+  const { requestType, parentId, req, metrics } = (await request.json()) as {
     requestType: CreateRequestType;
     parentId?: string;
     req?: Request;
+    metrics?: RequestCreatedMetricsProperties;
   };
 
   const settings = await services.settings.getOrCreate();
@@ -148,6 +152,7 @@ export async function clientAction({ params, request }: Route.ClientActionArgs) 
           ? req.authentication.type
           : 'none',
       has_docs: !!req?.description,
+      source: metrics?.source,
     },
   });
 
@@ -170,6 +175,7 @@ export const useRequestNewActionFetcher = createFetcherSubmitHook(
       requestType,
       parentId,
       req,
+      metrics,
     }: {
       organizationId: string;
       projectId: string;
@@ -177,6 +183,7 @@ export const useRequestNewActionFetcher = createFetcherSubmitHook(
       requestType: CreateRequestType;
       parentId?: string;
       req?: Partial<Request>;
+      metrics?: RequestCreatedMetricsProperties;
     }) => {
       const url = href('/organization/:organizationId/project/:projectId/workspace/:workspaceId/debug/request/new', {
         organizationId,
@@ -184,7 +191,7 @@ export const useRequestNewActionFetcher = createFetcherSubmitHook(
         workspaceId,
       });
 
-      return submit(JSON.stringify({ requestType, parentId, req }), {
+      return submit(JSON.stringify({ requestType, parentId, req, metrics }), {
         action: url,
         method: 'POST',
         encType: 'application/json',

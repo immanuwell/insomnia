@@ -5,7 +5,6 @@ import { useParams } from 'react-router';
 import type { BaseModel, Project } from '~/insomnia-data';
 import { models, services } from '~/insomnia-data';
 import { useRequestNewActionFetcher } from '~/routes/organization.$organizationId.project.$projectId.workspace.$workspaceId.debug.request.new';
-import { makeRequestCreatedEvent } from '~/ui/analytics';
 
 import { database } from '../../../common/database';
 import { strings } from '../../../common/strings';
@@ -71,12 +70,11 @@ export const AddRequestToCollectionModal: FC<AddRequestModalProps> = ({ onHide }
       workspaceId: selectedWorkspaceId,
       requestType: 'HTTP',
       parentId: selectedWorkspaceId,
+      metrics: {
+        source: 'add-request-to-collection-modal',
+      }
     });
     previousRequestFetcherState.current = 'loading';
-
-    window.main.trackAnalyticsEvent(
-      makeRequestCreatedEvent('HTTP', 'tab-list'),
-    );
   };
 
   useEffect(() => {
