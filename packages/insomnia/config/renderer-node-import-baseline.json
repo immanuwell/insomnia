@@ -17,26 +17,6 @@
       "builtin": "path"
     },
     {
-      "importer": "src/models/helpers/response-operations.ts",
-      "builtin": "fs"
-    },
-    {
-      "importer": "src/models/helpers/response-operations.ts",
-      "builtin": "zlib"
-    },
-    {
-      "importer": "src/network/network.ts",
-      "builtin": "fs"
-    },
-    {
-      "importer": "src/network/network.ts",
-      "builtin": "path"
-    },
-    {
-      "importer": "src/network/url-matches-cert-host.ts",
-      "builtin": "url"
-    },
-    {
       "importer": "src/plugins/context/response.ts",
       "builtin": "fs"
     },

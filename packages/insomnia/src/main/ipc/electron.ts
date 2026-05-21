@@ -162,6 +162,7 @@ export type HandleChannels =
   | 'webSocket.event.send'
   | 'webSocket.open'
   | 'webSocket.readyState'
+  | 'timeline.appendToFile'
   | 'writeFile'
   | 'writeResponseBodyToFile';
 
@@ -220,6 +221,7 @@ export type MainOnChannels =
   | 'sync.resolveConflict'
   | 'mcp.sendMCPRequest'
   | 'plugins.uiPromptResult'
+  | 'timeline.getPath'
   | 'writeText';
 
 export type RendererOnChannels =
