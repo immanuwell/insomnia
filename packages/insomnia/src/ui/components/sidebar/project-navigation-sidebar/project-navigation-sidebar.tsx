@@ -443,7 +443,13 @@ export const ProjectNavigationSidebar = ({
               // If workspace or any of its collection child matches the filter, show the workspace; otherwise hide
               items.find(i => i.kind === 'workspace' && i.doc._id === workspaceId)!.hidden = shouldHide;
             }
-            const pinnedCollectionChildren = collectionChildren.filter(child => child.pinned && !child.hidden);
+            // Show pinned collection children when the workspace is expanded
+            const pinnedCollectionChildren = shouldHideCollectionChildren
+              ? []
+              : // Filter out pinned requests by pinned attribute. Besides, when there is an active filter, also filter out un-matched requests.
+                collectionChildren.filter(
+                  child => child.pinned && !(projectNavigationSidebarFilter ? child.hidden : false),
+                );
 
             if (pinnedCollectionChildren.length > 0) {
               items.push({
@@ -463,7 +469,7 @@ export const ProjectNavigationSidebar = ({
                 ancestors: child.ancestors,
                 doc: child.doc,
                 collapsed: child.collapsed,
-                hidden: child.hidden,
+                hidden: false,
                 level: child.level,
                 pinned: child.pinned,
                 isFirstPinned: idx === 0,
@@ -634,7 +640,7 @@ export const ProjectNavigationSidebar = ({
         return;
       }
 
-      if (projectNavigationSidebarFilter && collapsed === undefined) {
+      if (projectNavigationSidebarFilter) {
         return;
       }
 

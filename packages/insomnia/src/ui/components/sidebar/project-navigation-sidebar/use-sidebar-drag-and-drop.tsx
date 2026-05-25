@@ -16,6 +16,7 @@ type AllowDropTarget = Extract<
   FlatItem,
   { kind: 'workspace' | 'collectionChild' | 'project' | 'emptyFolder' | 'emptyProject' | 'emptyCollection' }
 >;
+// WhiteList workspace scopes that are allowed to be moved across projects.
 const allowCrossProjectDropWorkspaceScope: string[] = [
   models.workspace.WorkspaceScopeKeys.collection,
   models.workspace.WorkspaceScopeKeys.design,
