@@ -781,7 +781,7 @@ export const ProjectNavigationSidebar = ({
     <Button
       aria-label="Create new Project"
       onPress={onCreateProject}
-      className="flex h-full items-center justify-center gap-1 rounded-xs px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
+      className="flex h-full items-center justify-center gap-1 rounded-xs border border-(--hl-md) px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
     >
       <Icon icon="plus" className="h-2.5 w-2.5" />
       <span>New Project</span>
@@ -792,7 +792,7 @@ export const ProjectNavigationSidebar = ({
     <Button
       aria-label="Cancel sync"
       onPress={cancelSync}
-      className="flex h-full items-center justify-center gap-1 rounded-xs px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
+      className="flex h-full items-center justify-center gap-1 rounded-xs border border-(--hl-md) px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
     >
       Cancel
       <Icon icon="stop-circle" />
@@ -801,7 +801,7 @@ export const ProjectNavigationSidebar = ({
     <Button
       aria-label="Sync Konnect"
       onPress={handleSync}
-      className="flex h-full items-center justify-center gap-1 rounded-xs px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
+      className="flex h-full items-center justify-center gap-1 rounded-xs border border-(--hl-md) px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
     >
       Sync
       <Icon icon="refresh" />
@@ -997,7 +997,7 @@ export const EmptyProjectNavigationSidebar = ({ onCreateProject }: { onCreatePro
             <Button
               aria-label="Create new Project"
               onPress={onCreateProject}
-              className="flex h-full items-center justify-center gap-1 rounded-xs px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
+              className="flex h-full items-center justify-center gap-1 rounded-xs border border-(--hl-md) px-2 text-sm text-(--color-font) ring-1 ring-transparent transition-all hover:bg-(--hl-xs) focus:ring-(--hl-md) focus:ring-inset aria-pressed:bg-(--hl-sm)"
             >
               <Icon icon="plus" className="h-2.5 w-2.5" />
               <span>New Project</span>
