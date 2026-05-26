@@ -275,6 +275,8 @@ const main: Window['main'] = {
   multipartBufferToArray: options => invokeWithNormalizedError('multipartBufferToArray', options),
   installPlugin: (lookupName: string, allowScopedPackageNames = false) =>
     invokeWithNormalizedError('installPlugin', lookupName, allowScopedPackageNames),
+  createPlugin: (options: { pluginName: string; mainJs: string }) =>
+    invokeWithNormalizedError('createPlugin', options),
   initializeWorkspaceBackendProject: options => invokeWithNormalizedError('initializeWorkspaceBackendProject', options),
   curlRequest: options => invokeWithNormalizedError('curlRequest', options),
   cancelCurlRequest: options => ipcRenderer.send('cancelCurlRequest', options),

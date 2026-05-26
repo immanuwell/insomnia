@@ -83,6 +83,7 @@ export type HandleChannels =
   | 'initializeWorkspaceBackendProject'
   | 'insecureReadFile'
   | 'insecureReadFileWithEncoding'
+  | 'createPlugin'
   | 'installPlugin'
   | 'lintSpec'
   | 'llm.clearActiveBackend'

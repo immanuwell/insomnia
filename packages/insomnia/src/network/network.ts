@@ -43,7 +43,6 @@ import * as pluginNetwork from '../plugins/context/network';
 import * as pluginRequest from '../plugins/context/request';
 import * as pluginResponse from '../plugins/context/response';
 import * as pluginStore from '../plugins/context/store';
-import * as plugins from '../plugins/index';
 import { RenderError } from '../templating/render-error';
 import type { RenderedRequest, RenderPurpose } from '../templating/types';
 import { maskOrDecryptVaultDataIfNecessary } from '../templating/utils';
@@ -1074,7 +1073,9 @@ export async function _applyRequestPluginHooks(renderedRequest: RenderedRequest,
   }
 
   if (process.type !== 'renderer') {
-    for (const { plugin, hook } of await plugins.getRequestHooks()) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const pluginIndex = require('../plugins/index');
+    for (const { plugin, hook } of await pluginIndex.getRequestHooks()) {
       const context = {
         ...(pluginApp.init() as Record<string, any>),
         ...pluginData.init(renderedContext.getProjectId()),
@@ -1113,7 +1114,9 @@ export async function _applyResponsePluginHooks(
     if (process.type !== 'renderer') {
       const newResponse = clone(response);
       const newRequest = clone(renderedRequest);
-      for (const { plugin, hook } of await plugins.getResponseHooks()) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const pluginIndex = require('../plugins/index');
+      for (const { plugin, hook } of await pluginIndex.getResponseHooks()) {
         const context = {
           ...(pluginApp.init() as Record<string, any>),
           ...pluginData.init(renderedContext.getProjectId()),

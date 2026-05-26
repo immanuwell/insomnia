@@ -47,6 +47,7 @@ import {
 } from '../authorize-user-in-default-browser';
 import { authorizeUserInWindow } from '../authorize-user-in-window';
 import { backup, restoreBackup } from '../backup';
+import { createPlugin } from '../create-plugin';
 import type { GitServiceAPI } from '../git-service';
 import installPlugin from '../install-plugin';
 import type { CurlBridgeAPI } from '../network/curl';
@@ -272,6 +273,7 @@ export interface RendererToMainBridgeAPI {
     | { response: Awaited<ReturnType<GenerateMcpSamplingResponseFunction>>; error: undefined }
     | { response: undefined; error: string }
   >;
+  createPlugin: (options: { pluginName: string; mainJs: string }) => Promise<void>;
   syncNewWorkspaceIfNeeded: typeof syncNewWorkspaceIfNeeded;
   plugins: PluginsBridgeAPI;
   notifyPluginPromptResult: (id: string, value: string | null) => void;
@@ -470,6 +472,10 @@ export function registerMainHandlers() {
 
   ipcMainHandle('installPlugin', (_, lookupName: string, allowScopedPackageNames = false) => {
     return installPlugin(lookupName, allowScopedPackageNames);
+  });
+
+  ipcMainHandle('createPlugin', async (_, options: { pluginName: string; mainJs: string }) => {
+    return createPlugin(options.pluginName, options.mainJs);
   });
 
   ipcMainOn('restart', () => {
