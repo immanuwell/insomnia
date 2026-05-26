@@ -16,6 +16,7 @@ import {
 } from '~/common/project';
 import { models, services } from '~/insomnia-data';
 import { useStorageRulesLoaderFetcher } from '~/routes/organization.$organizationId.storage-rules';
+import { useDocBodyKeyboardShortcuts } from '~/ui/components/keydown-binder';
 import { ProjectModal } from '~/ui/components/modals/project-modal';
 import { ScratchPadTutorialPanel } from '~/ui/components/panes/scratchpad-tutorial-pane';
 import { ProjectNavigationSidebar } from '~/ui/components/sidebar/project-navigation-sidebar/project-navigation-sidebar';
@@ -142,6 +143,11 @@ const Component = ({ loaderData }: Route.ComponentProps) => {
 
   const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    const isCollapsed = sidebarPanelRef.current?.isCollapsed();
+    return isCollapsed ? sidebarPanelRef.current?.expand() : sidebarPanelRef.current?.collapse();
+  };
+
   useEffect(() => {
     if (isSidebarCollapsed) {
       sidebarPanelRef.current?.collapse();
@@ -151,6 +157,7 @@ const Component = ({ loaderData }: Route.ComponentProps) => {
   }, [isSidebarCollapsed]);
 
   useEffect(() => {
+    // Listen to the toggle sidebar event from UI to collapse or expand the sidebar.
     return uiEventBus.on(TOGGLE_PROJECT_SIDEBAR, (collapsed: boolean) => {
       if (collapsed) {
         sidebarPanelRef.current?.collapse();
@@ -159,6 +166,16 @@ const Component = ({ loaderData }: Route.ComponentProps) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    // Listen to the toggle sidebar event from main process to collapse or expand the sidebar.
+    const unsubscribe = window.main.on('toggle-sidebar', toggleSidebar);
+    return unsubscribe;
+  }, []);
+
+  useDocBodyKeyboardShortcuts({
+    sidebar_toggle: toggleSidebar,
+  });
 
   const { features } = useOrganizationPermissions();
 
